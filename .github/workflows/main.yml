@@ -49,8 +49,8 @@ jobs:
            -v ~/.cache/electron:/root/.cache/electron \
            -v ~/.cache/electron-builder:/root/.cache/electron-builder \
            electronuserland/builder:wine
-      - name: 安装依赖,开始打包
-        working-directory: .
+#       - name: 安装依赖,开始打包
+#         working-directory: .
 #         run: |
 #           yarn
 #           yarn build-win
