@@ -34,7 +34,6 @@ jobs:
         run: |
           npm install
           npm run build-win
-          apt install zip -y
           zip dist.zip ./dist
           
       - name: Create Release
