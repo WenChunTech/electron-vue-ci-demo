@@ -17,11 +17,52 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  win-build:
+    runs-on: windows-latest
+    steps:
+      - name: Repo Checkout
+        uses: actions/checkout@v2
+      
+      - name: Node Build 
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          architecture: 'x64' # optional, x64 or x86. If not specified, x64 will be used by default
+        run: | 
+          npm install
+          npm run build-win
+      
+      - name: 安装依赖,开始打包
+        working-directory: .
+        run: |
+          apt install zip -y
+          zip dist.zip ./dist
+          
+      - name: Create Release
+        id: create_release
+        uses: monkeyWie/create-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+          
+      - name: Upload Release
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./dist
+          asset_name: dist.zip
+          asset_content_type: application/zip
+
+
   # This workflow contains a single job called "build"
-  build:
-    runs-on: ubuntu-latest
-    container:
-      image: electronuserland/builder:wine
+#   build:
+#     runs-on: ubuntu-latest
     #strategy:
     # matrix:
     #    os: [ubuntu-20.04, macos-11.0, windows-2019]
@@ -29,20 +70,13 @@ jobs:
     #runs-on: ${{ matrix.os }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
+#     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+#       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo 开始工作!
-
-      # Runs a set of commands using the runners shell
-      - name: 启动docker容器
-        run: |
-          docker images
-#          docker run --rm -ti --env-file <\(env | grep -iE 'DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS_TAG|TRAVIS|TRAVIS_REPO_|TRAVIS_BUILD_|TRAVIS_BRANCH|TRAVIS_PULL_REQUEST_|APPVEYOR_|CSC_|GH_|GITHUB_|BT_|AWS_|STRIP|BUILD_'\) --env ELECTRON_CACHE="/root/.cache/electron" --env ELECTRON_BUILDER_CACHE="/root/.cache/electron-builder" -v ${PWD}:/project -v ${PWD##*/}-node-modules:/project/node_modules -v ~/.cache/electron:/root/.cache/electron -v ~/.cache/electron-builder:/root/.cache/electron-builder electronuserland/builder:wine           
-          
+#       - name: Run a one-line script
+#         run: echo 开始工作!       
 #       - name: 安装依赖,开始打包
 #         working-directory: .
 #         run: |
