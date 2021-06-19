@@ -28,13 +28,12 @@ jobs:
         with:
           node-version: '14'
           architecture: 'x64' # optional, x64 or x86. If not specified, x64 will be used by default
-        run: | 
-          npm install
-          npm run build-win
       
       - name: 安装依赖,开始打包
         working-directory: .
         run: |
+          npm install
+          npm run build-win
           apt install zip -y
           zip dist.zip ./dist
           
