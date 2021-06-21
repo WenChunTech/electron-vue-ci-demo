@@ -32,9 +32,7 @@ jobs:
       - name: 安装依赖,开始打包
         working-directory: .
         run: |
-          echo 当前路径
-          pwd
-          apt update && apt upgrade -y && apt install -y zip
+          dir
           yarn
           yarn build-win
           Compress-Archive -Path .\dist 'dist.zip'
