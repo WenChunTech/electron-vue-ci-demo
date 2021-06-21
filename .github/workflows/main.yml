@@ -59,50 +59,10 @@ jobs:
           asset_content_type: application/zip
 
 
-  # This workflow contains a single job called "build"
 #   build:
 #     runs-on: ubuntu-latest
-    #strategy:
-    # matrix:
-    #    os: [ubuntu-20.04, macos-11.0, windows-2019]
-    # The type of runner that the job will run on
-    #runs-on: ${{ matrix.os }}
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-#     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-#       - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-#       - name: Run a one-line script
-#         run: echo 开始工作!       
-#       - name: 安装依赖,开始打包
-#         working-directory: .
-#         run: |
-            
-#           yarn
-#           yarn build-win
-#           yarn build-linux
-#           yarn build-mac
-#           zip dist.zip ./dist
-          
-#       - name: Create Release
-#         id: create_release
-#         uses: monkeyWie/create-release@master
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         with:
-#           tag_name: ${{ github.ref }}
-#           release_name: Release ${{ github.ref }}
-#           draft: false
-#           prerelease: false
-          
-#       - name: Upload Release
-#         uses: actions/upload-release-asset@v1.0.1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         with:
-#           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-#           asset_path: ./dist
-#           asset_name: dist.zip
-#           asset_content_type: application/zip
+#     strategy:
+#     matrix:
+#        os: [ubuntu-20.04, macos-11.0, windows-2019]
+#     The type of runner that the job will run on
+#     runs-on: ${{ matrix.os }}
