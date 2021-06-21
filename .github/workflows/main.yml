@@ -32,6 +32,8 @@ jobs:
       - name: 安装依赖,开始打包
         working-directory: .
         run: |
+          echo 当前路径
+          pwd
           apt update && apt upgrade -y && apt install -y zip
           yarn
           yarn build-win
@@ -79,6 +81,7 @@ jobs:
 #       - name: 安装依赖,开始打包
 #         working-directory: .
 #         run: |
+            
 #           yarn
 #           yarn build-win
 #           yarn build-linux
