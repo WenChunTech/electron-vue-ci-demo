@@ -32,7 +32,6 @@ jobs:
       - name: 安装依赖,开始打包
         working-directory: .
         run: |
-          dir
           yarn
           yarn build-win
           Compress-Archive -Path .\dist 'dist.zip'
