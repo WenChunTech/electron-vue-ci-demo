@@ -32,8 +32,9 @@ jobs:
       - name: 安装依赖,开始打包
         working-directory: .
         run: |
-          npm install
-          npm run build-win
+          apt update && apt upgrade -y && apt install -y zip
+          yarn
+          yarn build-win
           zip dist.zip ./dist
           
       - name: Create Release
