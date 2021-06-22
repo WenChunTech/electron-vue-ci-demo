@@ -18,11 +18,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   win-build:
-    strategy:
-      matrix:
-        runs-on: [ubuntu-latest, macos-latest, windows-latest]
-      fail-fast: false
-    runs-on: ${{ matrix.runs-on }}
+    runs-on: windows-latest
     steps:
       - name: Repo Checkout
         uses: actions/checkout@v2
@@ -60,7 +56,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           asset_path: ./dist.zip
-          asset_name: dist.zip
+          asset_name: dist-win.zip
           asset_content_type: application/zip
 
 
